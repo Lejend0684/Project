@@ -151,29 +151,39 @@ Tab:AddToggle({
         end
     end
 })
+local remote = Instance.new("RemoteFunction")
+remote.Name = "GiveSpeedTool"
+remote.Parent = game.ReplicatedStorage
+
+remote.OnServerInvoke = function()
+    local tool = Instance.new("Tool")
+    tool.Name = "Speed Tool"
+    tool.RequiresHandle = false
+    tool.Parent = game.Players.LocalPlayer.Backpack
+
+    local superhuman = false
+
+    tool.Equipped:Connect(function()
+        game.Players.LocalPlayer.Character.Humanoid.Name = "Hum"
+        game.Players.LocalPlayer.Character.Hum.WalkSpeed = 500
+        superhuman = true
+    end)
+
+    tool.Unequipped:Connect(function()
+        game.Players.LocalPlayer.Character.Hum.WalkSpeed = 16
+        game.Players.LocalPlayer.Character.Hum.Name = "Humanoid"
+        superhuman = false
+    end)
+
+    return true
+end
+
 Tab:AddButton({
     Name = "Speed Tool",
     CallBack = function()
-         local tool = Instance.new("Tool")
-tool.Name = "Speed Tool"
-tool.RequiresHandle = false
-tool.Parent = game.Players.LocalPlayer.Backpack
-
-local superhuman = false
-
-tool.Equipped:Connect(function()
-    game.Players.LocalPlayer.Character.Humanoid.Name = "Hum"
-    game.Players.LocalPlayer.Character.Hum.WalkSpeed = 500
-    superhuman = true
-end)
-
-tool.Unequipped:Connect(function()
-    game.Players.LocalPlayer.Character.Hum.WalkSpeed = 16
-    game.Players.LocalPlayer.Character.Hum.Name = "Humanoid"
-    superhuman = false
-end)
+        remote:InvokeServer()
     end
-  })
+})
 local Tab = Window:MakeTab({
 	Name = "Teleports",
 	Icon = "rbxassetid://4483345998",
