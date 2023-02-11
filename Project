@@ -648,7 +648,7 @@ player.character:FindFirstChild("Humanoid").Sit = false
   end
   end
 --------------------------------------
-function listnames()
+function listname()
 	for _,Player in pairs(game:GetService('Players'):GetChildren()) do
 			if table.find(List, Player.UserId) then
 			if Player.Character then
@@ -669,4 +669,4 @@ function listnames()
 			end
 		end
 	end
-local success,err = pcall(listnames)
+local success,err = pcall(listname)
